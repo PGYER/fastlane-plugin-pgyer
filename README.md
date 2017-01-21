@@ -18,7 +18,14 @@ This pluginin allow you distribute app automatically to [pgyer beta testing serv
 
 Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and `bundle exec fastlane test`.
 
-**Note to author:** Please set up a sample project to make it easy for users to explore what your plugin does. Provide everything that is necessary to try out the plugin in this project (including a sample Xcode/Android project if necessary)
+Just specify the `api_key` and `user_key` associated with your pgyer account.
+
+```
+lane :beta do
+  gym
+  pgyer(api_key: "7f15xxxxxxxxxxxxxxxxxx141", user_key: "4a5bcxxxxxxxxxxxxxxx3a9e")
+end
+```
 
 ## Run tests for this plugin
 
