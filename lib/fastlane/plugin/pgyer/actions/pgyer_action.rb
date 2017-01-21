@@ -83,7 +83,7 @@ module Fastlane
                                   optional: false,
                                       type: String),
           FastlaneCore::ConfigItem.new(key: :apk,
-                                       env_name: "FL_HOCKEY_APK",
+                                       env_name: "PGYER_APK",
                                        description: "Path to your APK file",
                                        default_value: Actions.lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
                                        optional: true,
