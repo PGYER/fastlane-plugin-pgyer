@@ -12,9 +12,7 @@ fastlane add_plugin pgyer
 
 ## About pgyer
 
-distribute app to pgyer beta testing service
-
-**Note to author:** Add a more detailed description about this plugin here. If your plugin contains multiple actions, make sure to mention them here.
+This pluginin allow you distribute app automatically to [pgyer beta testing service](https://www.pgyer..com) in fastlane workflow.
 
 ## Example
 
