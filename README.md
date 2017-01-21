@@ -12,7 +12,7 @@ fastlane add_plugin pgyer
 
 ## About pgyer
 
-This pluginin allow you distribute app automatically to [pgyer beta testing service](https://www.pgyer..com) in fastlane workflow.
+This pluginin allow you distribute app automatically to [pgyer beta testing service](https://www.pgyer.com) in fastlane workflow.
 
 ## Example
 
