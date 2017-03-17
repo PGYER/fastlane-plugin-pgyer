@@ -6,7 +6,7 @@ module Fastlane
     class PgyerAction < Action
 
       def self.run(params)
-        UI.message("The pgyer plugin is working!")
+        UI.message("The pgyer plugin is working.")
 
         api_host = "http://qiniu-storage.pgyer.com/apiv1/app/upload"
         api_key = params[:api_key]
@@ -22,6 +22,21 @@ module Fastlane
         end
 
         UI.message "build_file: #{build_file}"
+
+        password = params[:password]
+        if password.nil?
+            password = ""
+        end
+
+        update_description = params[:update_description]
+        if update_description.nil?
+            update_description = ""
+        end
+
+        install_type = params[:install_type]
+        if install_type.nil?
+            install_type = "1"
+        end
 
         # start upload
         conn_options = {
@@ -41,6 +56,9 @@ module Fastlane
         params = {
             '_api_key' => api_key,
             'uKey' => user_key,
+            'password' => password,
+            'updateDescription' => update_description,
+            'installType' => install_type,
             'file' => Faraday::UploadIO.new(build_file, 'application/octet-stream')
         }
 
@@ -106,6 +124,21 @@ module Fastlane
                                        conflict_block: proc do |value|
                                          UI.user_error!("You can't use 'ipa' and '#{value.key}' options in one run")
                                        end),
+          FastlaneCore::ConfigItem.new(key: :password,
+                                  env_name: "PGYER_PASSWORD",
+                               description: "set password to protect app",
+                                  optional: true,
+                                      type: String),
+          FastlaneCore::ConfigItem.new(key: :update_description,
+                                  env_name: "PGYER_UPDATE_DESCRIPTION",
+                               description: "set update description for app",
+                                  optional: true,
+                                      type: String),
+          FastlaneCore::ConfigItem.new(key: :install_type,
+                                  env_name: "PGYER_INSTALL_TYPE",
+                               description: "set install type for app (1=public, 2=password, 3=invite). Please set as a string.",
+                                  optional: true,
+                                      type: String),
         ]
       end
 
