@@ -27,6 +27,24 @@ lane :beta do
 end
 ```
 
+You can also set a password to protect the App from being downloaded publicly:
+
+```
+lane :beta do
+  gym
+  pgyer(api_key: "7f15xxxxxxxxxxxxxxxxxx141", user_key: "4a5bcxxxxxxxxxxxxxxx3a9e", password: "123456", install_type: "2")
+end
+```
+
+Set a version update description for App:
+
+```
+lane :beta do
+  gym
+  pgyer(api_key: "7f15xxxxxxxxxxxxxxxxxx141", user_key: "4a5bcxxxxxxxxxxxxxxx3a9e", update_description: "update by fastlane")
+end
+```
+
 ## Run tests for this plugin
 
 To run both the tests, and code style validation, run
