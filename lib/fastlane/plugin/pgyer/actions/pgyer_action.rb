@@ -136,7 +136,7 @@ module Fastlane
                                       type: String),
           FastlaneCore::ConfigItem.new(key: :install_type,
                                   env_name: "PGYER_INSTALL_TYPE",
-                               description: "set install type for app (1=public, 2=password, 3=invite). Please set as a string.",
+                               description: "set install type for app (1=public, 2=password, 3=invite). Please set as a string",
                                   optional: true,
                                       type: String),
         ]
