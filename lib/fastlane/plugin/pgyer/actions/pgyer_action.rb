@@ -4,7 +4,6 @@ require 'faraday_middleware'
 module Fastlane
   module Actions
     class PgyerAction < Action
-
       def self.run(params)
         UI.message("The pgyer plugin is working.")
 
@@ -13,29 +12,29 @@ module Fastlane
         user_key = params[:user_key]
 
         build_file = [
-            params[:ipa],
-            params[:apk]
+          params[:ipa],
+          params[:apk]
         ].detect { |e| !e.to_s.empty? }
 
         if build_file.nil?
-            UI.user_error!("You have to provide a build file")
+          UI.user_error!("You have to provide a build file")
         end
 
         UI.message "build_file: #{build_file}"
 
         password = params[:password]
         if password.nil?
-            password = ""
+          password = ""
         end
 
         update_description = params[:update_description]
         if update_description.nil?
-            update_description = ""
+          update_description = ""
         end
 
         install_type = params[:install_type]
         if install_type.nil?
-            install_type = "1"
+          install_type = "1"
         end
 
         # start upload
@@ -47,10 +46,10 @@ module Fastlane
         }
 
         pgyer_client = Faraday.new(nil, conn_options) do |c|
-            c.request :multipart
-            c.request :url_encoded
-            c.response :json, content_type: /\bjson$/
-            c.adapter :net_http
+          c.request :multipart
+          c.request :url_encoded
+          c.response :json, content_type: /\bjson$/
+          c.adapter :net_http
         end
 
         params = {
@@ -67,8 +66,11 @@ module Fastlane
         response = pgyer_client.post api_host, params
         info = response.body
 
-        UI.success "Upload success. Visit this URL to see: https://www.pgyer.com/#{info['data']['appShortcutUrl']}"
+        if info['code'] != 0
+          UI.user_error!("PGYER Plugin Error: #{info['message']}")
+        end
 
+        UI.success "Upload success. Visit this URL to see: https://www.pgyer.com/#{info['data']['appShortcutUrl']}"
       end
 
       def self.description
@@ -138,7 +140,7 @@ module Fastlane
                                   env_name: "PGYER_INSTALL_TYPE",
                                description: "set install type for app (1=public, 2=password, 3=invite). Please set as a string",
                                   optional: true,
-                                      type: String),
+                                      type: String)
         ]
       end
 
