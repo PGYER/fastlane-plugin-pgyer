@@ -18,12 +18,12 @@ This pluginin allow you distribute app automatically to [pgyer beta testing serv
 
 Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and `bundle exec fastlane test`.
 
-Just specify the `api_key` and `user_key` associated with your pgyer account.
+Just specify the `api_key` associated with your pgyer account.
 
 ```
 lane :beta do
   gym
-  pgyer(api_key: "7f15xxxxxxxxxxxxxxxxxx141", user_key: "4a5bcxxxxxxxxxxxxxxx3a9e")
+  pgyer(api_key: "7f15xxxxxxxxxxxxxxxxxx141")
 end
 ```
 
@@ -32,7 +32,7 @@ You can also set a password to protect the App from being downloaded publicly:
 ```
 lane :beta do
   gym
-  pgyer(api_key: "7f15xxxxxxxxxxxxxxxxxx141", user_key: "4a5bcxxxxxxxxxxxxxxx3a9e", password: "123456", install_type: "2")
+  pgyer(api_key: "7f15xxxxxxxxxxxxxxxxxx141", password: "123456", install_type: "2")
 end
 ```
 
@@ -41,10 +41,29 @@ Set a version update description for App:
 ```
 lane :beta do
   gym
-  pgyer(api_key: "7f15xxxxxxxxxxxxxxxxxx141", user_key: "4a5bcxxxxxxxxxxxxxxx3a9e", update_description: "update by fastlane")
+  pgyer(api_key: "7f15xxxxxxxxxxxxxxxxxx141", update_description: "update by fastlane")
 end
 ```
 
+And more params
+
+```
+
+password: Set password to protect app.
+
+update_description: Set update description for app.
+
+install_type: Set install type for app (1=public, 2=password, 3=invite), Please set as a string.
+
+install_date: Set install type for app (1=Set valid time, 2=Long-term effective, other=Do not modify the last setting), Please set as a string.
+
+install_start_date: The value is a string of characters, for example, 2018-01-01.
+
+install_end_date: The value is a string of characters, such as 2018-12-31.
+
+channel: Need to update the specified channel of the download short link, can specify only one channel, string type, such as: ABCD. Specifies channel uploads. If you do not have one, do not use this parameter.
+
+```
 ## Run tests for this plugin
 
 To run both the tests, and code style validation, run
