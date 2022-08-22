@@ -98,8 +98,8 @@ module Fastlane
         if key.nil? || endpoint.nil? || request_params.nil?
           UI.user_error!("Get token is failed")
         end
-
-        request_params["file"] = Faraday::UploadIO.new(build_file, "application/octet-stream")
+        content_type = type == 'android' ? 'application/vnd.android.package-archive' : 'application/octet-stream'
+        request_params["file"] = Faraday::UploadIO.new(build_file, content_type)
 
         UI.message "Start upload #{build_file} to pgyer..."
 
