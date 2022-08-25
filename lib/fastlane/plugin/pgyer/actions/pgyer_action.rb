@@ -98,7 +98,7 @@ module Fastlane
         if key.nil? || endpoint.nil? || request_params.nil?
           UI.user_error!("Get token is failed")
         end
-        content_type = type == 'android' ? 'application/vnd.android.package-archive' : 'application/octet-stream'
+        content_type = type == "android" ? "application/vnd.android.package-archive" : "application/octet-stream"
         request_params["file"] = Faraday::UploadIO.new(build_file, content_type)
 
         UI.message "Start upload #{build_file} to pgyer..."
@@ -191,7 +191,7 @@ module Fastlane
                                        optional: true,
                                        type: String),
           FastlaneCore::ConfigItem.new(key: :channel,
-                                       env_name: "PGYER_INSTALL_TYPE",
+                                       env_name: "PGYER_SPECIFIED_CHANNEL",
                                        description: "Need to update the specified channel of the download short link, can specify only one channel, string type, such as: ABCD",
                                        optional: true,
                                        type: String),
