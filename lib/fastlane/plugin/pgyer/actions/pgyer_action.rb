@@ -38,6 +38,7 @@ module Fastlane
           "buildInstallType" => install_type,
           "buildPassword" => password,
         }
+        request_params["oversea"] = params[:oversea] unless params[:oversea].nil?
 
         update_description = params[:update_description]
 
@@ -98,7 +99,7 @@ module Fastlane
         if key.nil? || endpoint.nil? || request_params.nil?
           UI.user_error!("Get token is failed")
         end
-        content_type = type == 'android' ? 'application/vnd.android.package-archive' : 'application/octet-stream'
+        content_type = type == "android" ? "application/vnd.android.package-archive" : "application/octet-stream"
         request_params["file"] = Faraday::UploadIO.new(build_file, content_type)
 
         UI.message "Start upload #{build_file} to pgyer..."
@@ -185,11 +186,18 @@ module Fastlane
                                        description: "The value is a string of characters, for example, 2018-01-01",
                                        optional: true,
                                        type: String),
+
           FastlaneCore::ConfigItem.new(key: :install_end_date,
                                        env_name: "PGYER_INSTALL_END_DATE",
                                        description: "The value is a string of characters, such as 2018-12-31",
                                        optional: true,
                                        type: String),
+
+          FastlaneCore::ConfigItem.new(key: :oversea,
+                                       env_name: "PGYER_OVERSEA",
+                                       description: "Whether to use overseas acceleration. 1 for overseas accelerated upload, 0 for domestic accelerated upload, not filled in for automatic judgment based on IP",
+                                       optional: true,
+                                       type: Numeric),
           FastlaneCore::ConfigItem.new(key: :channel,
                                        env_name: "PGYER_INSTALL_TYPE",
                                        description: "Need to update the specified channel of the download short link, can specify only one channel, string type, such as: ABCD",
