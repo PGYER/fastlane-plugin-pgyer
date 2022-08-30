@@ -199,7 +199,7 @@ module Fastlane
                                        optional: true,
                                        type: Numeric),
           FastlaneCore::ConfigItem.new(key: :channel,
-                                       env_name: "PGYER_INSTALL_TYPE",
+                                       env_name: "PGYER_SPECIFIED_CHANNEL",
                                        description: "Need to update the specified channel of the download short link, can specify only one channel, string type, such as: ABCD",
                                        optional: true,
                                        type: String),
