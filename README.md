@@ -14,6 +14,28 @@ fastlane add_plugin pgyer
 
 This pluginin allow you distribute app automatically to [pgyer beta testing service](https://www.pgyer.com) in fastlane workflow.
 
+## How to update pgyer plugin to the latest version
+
+**Due to the adjustment of the API interface, please ensure that the plugin version is at least `0.2.4`**
+
+Plan A: update all plguins (Recommended)
+
+
+```bash
+fastlane update_plugins 
+```
+
+Plan B: update pgyer plugin only
+
+modify `fastlane/Pluginfile`, update the following line:
+
+```ruby
+gem 'fastlane-plugin-pgyer', ">= 0.2.4" # ensure plugin version >= 0.2.4
+```
+
+and run `bundle install` at the root of your fastlane project to update gemfile.lock
+
+
 ## Example
 
 Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and `bundle exec fastlane test`.
