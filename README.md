@@ -37,7 +37,7 @@ and run `bundle install` at the root of your fastlane project to update gemfile.
 
 ## Plugin avaliable options
 
-please visit [https://github.com/shishirui/fastlane-plugin-pgyer/blob/master/lib/fastlane/plugin/pgyer/actions/pgyer_action.rb#L140-L152](https://github.com/shishirui/fastlane-plugin-pgyer/blob/master/lib/fastlane/plugin/pgyer/actions/pgyer_action.rb#L140-L152) to know the options
+please visit [https://github.com/shishirui/fastlane-plugin-pgyer/blob/master/lib/fastlane/plugin/pgyer/actions/pgyer_action.rb#L135-L205](https://github.com/shishirui/fastlane-plugin-pgyer/blob/master/lib/fastlane/plugin/pgyer/actions/pgyer_action.rb#L135-L205) to know the options.
 
 
 ## Example
