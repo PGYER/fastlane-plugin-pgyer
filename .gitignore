@@ -9,3 +9,5 @@ Gemfile.lock
 fastlane/README.md
 fastlane/report.xml
 .vscode
+coverage
+pgyer-fastlane-uploaded-app-info.json

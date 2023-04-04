@@ -110,7 +110,14 @@ module Fastlane
           UI.user_error!("PGYER Plugin Upload Error: #{response.body}")
         end
 
-        self.checkPublishStatus(pgyer_client, api_host, api_key, key)
+        answer = self.checkPublishStatus(pgyer_client, api_host, api_key, key)
+
+        if params[:save_uploaded_info_json]
+          File.open("pgyer-fastlane-uploaded-app-info.json", "w") do |f|
+            f.write(answer.to_json)
+          end
+        end
+        answer
       end
 
       def self.description
@@ -171,6 +178,14 @@ module Fastlane
                                        description: "Set update description for app",
                                        optional: true,
                                        type: String),
+
+          FastlaneCore::ConfigItem.new(key: :save_uploaded_info_json,
+                                        env_name: "PGYER_SAVE_UPLOADED_INFO_JSON",
+                                        description: "Save uploaded info json to file named pgyer-fastlane-uploaded-app-info.json",
+                                        optional: true,
+                                        default_value: false,
+                                        type: Boolean),
+
           FastlaneCore::ConfigItem.new(key: :install_type,
                                        env_name: "PGYER_INSTALL_TYPE",
                                        description: "Set install type for app (1=public, 2=password, 3=invite). Please set as a string",
@@ -226,7 +241,9 @@ module Fastlane
           if shortUrl.nil? || shortUrl == ""
             shortUrl = info["data"]["buildKey"]
           end
-          UI.success "Upload success. Visit this URL to see: https://www.pgyer.com/#{shortUrl}"
+          info["data"]["fastlaneAddedWholeVisitUrl"] = "https://www.pgyer.com/#{shortUrl}"
+          UI.success "Upload success. Visit this URL to see: #{info["data"]["fastlaneAddedWholeVisitUrl"]}"
+          return info["data"]
         elsif code == 1246 || code == 1247
           sleep 3
           self.checkPublishStatus(client, api_host, api_key, buildKey)
