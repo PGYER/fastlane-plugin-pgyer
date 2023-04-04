@@ -22,7 +22,7 @@ Plan A: update all plguins (Recommended)
 
 
 ```bash
-fastlane update_plugins 
+fastlane update_plugins
 ```
 
 Plan B: update pgyer plugin only
@@ -71,6 +71,29 @@ lane :beta do
 end
 ```
 
+
+If the upload is successful, you will get information about the app after it is uploaded, which is returned from the API interface app/buildinfo . You can pass it to other plugins, or export it to the terminal for use by other scripts:
+
+```ruby
+lane :beta do
+  gym
+  answer = pgyer(api_key: "xxxxxx")
+  puts answer
+  # terminal outputs like this if uploaded successfully
+  # {"buildKey"=>"xxxx", "buildType"=>"2", "buildIsFirst"=>"0", "buildIsLastest"=>"1", "buildFileKey"=>"xxx.apk", "buildFileName"=>"", "buildFileSize"=>"111111", "buildName"=>"testApk", "buildVersion"=>"0.11.0", "buildVersionNo"=>"13", "buildBuildVersion"=>"10", "buildIdentifier"=>"com.pgyer.testapk", "buildIcon"=>"xxxx", "buildDescription"=>"", "buildUpdateDescription"=>"", "buildScreenshots"=>"", "buildShortcutUrl"=>"xxxxxxx", "buildCreated"=>"2023-04-04 11:33:24", "buildUpdated"=>"2023-04-04 11:33:24", "buildQRCodeURL"=>"https://www.pgyer.com/app/qrcodeHistory/xxxxxx", "fastlaneAddedWholeVisitUrl"=>"https://www.pgyer.com/xxxxxx"}
+  puts "url = #{answer["fastlaneAddedWholeVisitUrl"]}"
+
+  # terminal outputs like this if uploaded successfully
+  # url = https://www.pgyer.com/xxxxxx
+
+  # More information please visit https://www.pgyer.com/doc/view/api#fastUploadApp to check API "https://www.pgyer.com/apiv2/app/buildInfo"
+
+end
+```
+
+
+```
+
 And more params
 
 ```
@@ -88,6 +111,8 @@ install_start_date: The value is a string of characters, for example, 2018-01-01
 install_end_date: The value is a string of characters, such as 2018-12-31.
 
 channel: Need to update the specified channel of the download short link, can specify only one channel, string type, such as: ABCD. Specifies channel uploads. If you do not have one, do not use this parameter.
+
+save_uploaded_info_json: (true or false, default to false) Whether to save the information returned by the API interface to a json file.
 
 ```
 ## Run tests for this plugin
