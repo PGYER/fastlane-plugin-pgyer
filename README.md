@@ -1,6 +1,9 @@
 # pgyer plugin
 
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-pgyer)
+## Important Notifications
+
+- Since pgyer has migrated the API domain name, Please update the plugin to the latest version (>= 0.2.6) to avoid uploading failures.
 
 ## Getting Started
 
