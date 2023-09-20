@@ -73,7 +73,7 @@ module Fastlane
           },
         }
 
-        api_host = "https://www.pgyer.com/apiv2/app"
+        api_host = "https://www.xcxwo.com/apiv2/app"
 
         pgyer_client = Faraday.new(nil, conn_options) do |c|
           c.request :multipart
@@ -232,6 +232,8 @@ module Fastlane
       private
 
       def self.checkPublishStatus(client, api_host, api_key, buildKey)
+        url ="#{api_host}/buildInfo"
+        UI.message "checkPublishStatus url: #{url}"
         response = client.post "#{api_host}/buildInfo", { :_api_key => api_key, :buildKey => buildKey }
         info = response.body
         code = info["code"]
@@ -241,7 +243,7 @@ module Fastlane
           if shortUrl.nil? || shortUrl == ""
             shortUrl = info["data"]["buildKey"]
           end
-          info["data"]["fastlaneAddedWholeVisitUrl"] = "https://www.pgyer.com/#{shortUrl}"
+          info["data"]["fastlaneAddedWholeVisitUrl"] = "https://wwww.xcxwo.com/#{shortUrl}"
           UI.success "Upload success. Visit this URL to see: #{info["data"]["fastlaneAddedWholeVisitUrl"]}"
           return info["data"]
         elsif code == 1246 || code == 1247
