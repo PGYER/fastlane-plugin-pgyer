@@ -243,7 +243,7 @@ module Fastlane
           if shortUrl.nil? || shortUrl == ""
             shortUrl = info["data"]["buildKey"]
           end
-          info["data"]["fastlaneAddedWholeVisitUrl"] = "https://wwww.xcxwo.com/#{shortUrl}"
+          info["data"]["fastlaneAddedWholeVisitUrl"] = "https://www.xcxwo.com/#{shortUrl}"
           UI.success "Upload success. Visit this URL to see: #{info["data"]["fastlaneAddedWholeVisitUrl"]}"
           return info["data"]
         elsif code == 1246 || code == 1247
