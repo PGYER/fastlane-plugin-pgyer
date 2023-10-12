@@ -73,7 +73,7 @@ module Fastlane
           },
         }
 
-        api_host = "https://www.xcxwo.com/apiv2/app"
+        api_host = "https://www.pgyer.com/apiv2/app"
 
         pgyer_client = Faraday.new(nil, conn_options) do |c|
           c.request :multipart
@@ -243,7 +243,7 @@ module Fastlane
           if shortUrl.nil? || shortUrl == ""
             shortUrl = info["data"]["buildKey"]
           end
-          info["data"]["fastlaneAddedWholeVisitUrl"] = "https://www.xcxwo.com/#{shortUrl}"
+          info["data"]["fastlaneAddedWholeVisitUrl"] = "https://www.pgyer.com/#{shortUrl}"
           UI.success "Upload success. Visit this URL to see: #{info["data"]["fastlaneAddedWholeVisitUrl"]}"
           return info["data"]
         elsif code == 1246 || code == 1247
