@@ -100,9 +100,19 @@ module Fastlane
           UI.user_error!("Get token is failed")
         end
         content_type = type == "android" ? "application/vnd.android.package-archive" : "application/octet-stream"
+
+        if !params[:user_download_file_name].nil?
+          request_params["x-cos-meta-file-name"] = params[:user_download_file_name]
+        end
         request_params["file"] = Faraday::UploadIO.new(build_file, content_type)
 
         UI.message "Start upload #{build_file} to pgyer..."
+
+        UI.message "Upload endpoint: #{endpoint}"
+
+        UI.message "Upload request_params: #{request_params}"
+
+
 
         response = pgyer_client.post endpoint, request_params
 
@@ -173,6 +183,13 @@ module Fastlane
                                        description: "Set password to protect app",
                                        optional: true,
                                        type: String),
+
+          FastlaneCore::ConfigItem.new(key: :user_download_file_name,
+                                       env_name: "USER_DOWNLOAD_FILE_NAME",
+                                       description: "Rename the file name that user downloaded from pgyer",
+                                       optional: true,
+                                       type: String),
+
           FastlaneCore::ConfigItem.new(key: :update_description,
                                        env_name: "PGYER_UPDATE_DESCRIPTION",
                                        description: "Set update description for app",

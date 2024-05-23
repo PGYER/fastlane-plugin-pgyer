@@ -115,7 +115,11 @@ install_end_date: The value is a string of characters, such as 2018-12-31.
 
 channel: Need to update the specified channel of the download short link, can specify only one channel, string type, such as: ABCD. Specifies channel uploads. If you do not have one, do not use this parameter.
 
+user_download_file_name: The name of the file downloaded by the user, the string type, such as: test.apk.
+
 save_uploaded_info_json: (true or false, default to false) Whether to save the information returned by the API interface to a json file.
+
+
 
 ```
 ## Run tests for this plugin
