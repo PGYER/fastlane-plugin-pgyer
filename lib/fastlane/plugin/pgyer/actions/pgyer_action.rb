@@ -12,13 +12,14 @@ module Fastlane
         build_file = [
           params[:ipa],
           params[:apk],
+          params[:hap],
         ].detect { |e| !e.to_s.empty? }
 
         if build_file.nil?
           UI.user_error!("You have to provide a build file")
         end
 
-        type = params[:ipa].nil? ? "android" : "ios"
+        type = params[:hap].nil? ? (params[:ipa].nil? ? "android" : "ios") : "harmonyos"
 
         UI.message "build_file: #{build_file}, type: #{type}"
 
@@ -162,7 +163,7 @@ module Fastlane
                                        verify_block: proc do |value|
                                          UI.user_error!("Couldn't find apk file at path '#{value}'") unless File.exist?(value)
                                        end,
-                                       conflicting_options: [:ipa],
+                                       conflicting_options: [:ipa, :hap],
                                        conflict_block: proc do |value|
                                          UI.user_error!("You can't use 'apk' and '#{value.key}' options in one run")
                                        end),
@@ -174,9 +175,21 @@ module Fastlane
                                        verify_block: proc do |value|
                                          UI.user_error!("Couldn't find ipa file at path '#{value}'") unless File.exist?(value)
                                        end,
-                                       conflicting_options: [:apk],
+                                       conflicting_options: [:apk, :hap],
                                        conflict_block: proc do |value|
                                          UI.user_error!("You can't use 'ipa' and '#{value.key}' options in one run")
+                                       end),
+          FastlaneCore::ConfigItem.new(key: :hap,
+                                       env_name: "PGYER_HAP",
+                                       description: "Path to your HAP file. Optional if you use the _gym_ or _xcodebuild_ action. For Mac zip the .app. For Android provide path to .apk file",
+                                       default_value: Actions.lane_context[:HVIGOR_HAP_OUTPUT_PATH],
+                                       optional: true,
+                                       verify_block: proc do |value|
+                                         UI.user_error!("Couldn't find hap file at path '#{value}'") unless File.exist?(value)
+                                       end,
+                                       conflicting_options: [:apk, :ipa],
+                                       conflict_block: proc do |value|
+                                         UI.user_error!("You can't use 'hap' and '#{value.key}' options in one run")
                                        end),
           FastlaneCore::ConfigItem.new(key: :password,
                                        env_name: "PGYER_PASSWORD",
