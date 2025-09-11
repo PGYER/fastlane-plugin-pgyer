@@ -190,6 +190,18 @@ module Fastlane
                                        conflict_block: proc do |value|
                                          UI.user_error!("You can't use 'ipa' and '#{value.key}' options in one run")
                                        end),
+          FastlaneCore::ConfigItem.new(key: :hap,
+                                       env_name: "PGYER_HAP",
+                                       description: "Path to your HAP file. Optional if you use the _gym_ or _xcodebuild_ action. For Mac zip the .app. For Android provide path to .apk file",
+                                       default_value: Actions.lane_context[:HVIGOR_HAP_OUTPUT_PATH],
+                                       optional: true,
+                                       verify_block: proc do |value|
+                                         UI.user_error!("Couldn't find hap file at path '#{value}'") unless File.exist?(value)
+                                       end,
+                                       conflicting_options: [:apk, :ipa],
+                                       conflict_block: proc do |value|
+                                         UI.user_error!("You can't use 'hap' and '#{value.key}' options in one run")
+                                       end),
           FastlaneCore::ConfigItem.new(key: :password,
                                        env_name: "PGYER_PASSWORD",
                                        description: "Set password to protect app",
