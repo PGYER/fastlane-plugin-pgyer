@@ -66,7 +66,7 @@ end
 ```
 
 Set a version update description for App:
-
+acd88a1a52f0818dc7923150c4d86f08
 ```
 lane :beta do
   gym
@@ -94,6 +94,22 @@ lane :beta do
 end
 ```
 
+
+HAP file upload
+
+pgyer supports hap file to upload, use params hap to specify the absolute file path.
+
+  ```ruby
+ lane :beta do
+  gym
+  pgyer(api_key: "7f15xxxxxxxxxxxxxxxxxx141", hap: "xxxx")
+end
+  ```
+
+  or in bash
+```bash
+fastlane run pgyer api_key:7f15xxxxxxxxxxxxxxxxxx141 hap:xxx.hap
+```
 
 
 

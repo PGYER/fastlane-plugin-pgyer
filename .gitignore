@@ -9,5 +9,8 @@ Gemfile.lock
 fastlane/README.md
 fastlane/report.xml
 .vscode
+.byebug_history
 coverage
 pgyer-fastlane-uploaded-app-info.json
+2.apk
+3.hap
