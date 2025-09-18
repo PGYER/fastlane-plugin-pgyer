@@ -167,17 +167,6 @@ module Fastlane
                                        conflict_block: proc do |value|
                                          UI.user_error!("You can't use 'apk' and '#{value.key}' options in one run")
                                        end),
-          FastlaneCore::ConfigItem.new(key: :hap,
-                                       env_name: "PGYER_HAP",
-                                       description: "Path to your HAP file",
-                                       optional: true,
-                                       verify_block: proc do |value|
-                                         UI.user_error!("Couldn't find hap file at path '#{value}'") unless File.exist?(value)
-                                       end,
-                                       conflicting_options: [:ipa, :apk],
-                                       conflict_block: proc do |value|
-                                         UI.user_error!("You can't use 'hap' and '#{value.key}' options in one run")
-                                       end),
           FastlaneCore::ConfigItem.new(key: :ipa,
                                        env_name: "PGYER_IPA",
                                        description: "Path to your IPA file. Optional if you use the _gym_ or _xcodebuild_ action. For Mac zip the .app. For Android provide path to .apk file",
@@ -192,7 +181,7 @@ module Fastlane
                                        end),
           FastlaneCore::ConfigItem.new(key: :hap,
                                        env_name: "PGYER_HAP",
-                                       description: "Path to your HAP file. Optional if you use the _gym_ or _xcodebuild_ action. For Mac zip the .app. For Android provide path to .apk file",
+                                       description: "Path to your HAP file",
                                        default_value: Actions.lane_context[:HVIGOR_HAP_OUTPUT_PATH],
                                        optional: true,
                                        verify_block: proc do |value|
