@@ -15,13 +15,16 @@ jobs:
       matrix:
         ruby-version: ['3.2', '3.3', '3.4']
         faraday-version: ['']
+        fastlane-version: ['']
         include:
           # fastlane 2.237.0 and earlier use Faraday 1
           - ruby-version: '3.2'
             faraday-version: '~> 1.10'
+            fastlane-version: '2.237.0'
     name: Ruby ${{ matrix.ruby-version }}${{ matrix.faraday-version && format(', Faraday {0}', matrix.faraday-version) || '' }}
     env:
       FARADAY_VERSION: ${{ matrix.faraday-version }}
+      FASTLANE_VERSION: ${{ matrix.fastlane-version }}
     steps:
       - uses: actions/checkout@v6
 
