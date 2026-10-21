@@ -192,11 +192,16 @@ describe Fastlane::Helper::PgyerClient do
   describe "DNS over HTTPS" do
     let(:client) { described_class.new(doh: true, sleeper: ->(_seconds) {}) }
 
+    def needs_ipaddr
+      skip("Net::HTTP#ipaddr= needs Ruby 2.7 or later") unless Net::HTTP.method_defined?(:ipaddr=)
+    end
+
     def stub_doh(host, body)
       stub_request(:get, "https://dns.alidns.com/resolve").with(query: { name: host, type: "A" }).to_return(json_response(body))
     end
 
     it "connects to the address it found but keeps verifying the certificate of the host name" do
+      needs_ipaddr
       stub_doh("www.pgyer.com", { "Status" => 0, "Answer" => [{ "name" => "www.pgyer.com.", "type" => 5, "data" => "cdn.example." }, { "name" => "cdn.example.", "type" => 1, "data" => "203.0.113.7" }] })
       connections = []
       allow(described_class).to receive(:connect_to).and_wrap_original do |original, http, address|
@@ -214,6 +219,7 @@ describe Fastlane::Helper::PgyerClient do
     end
 
     it "moves on to the next server when the lookup fails" do
+      needs_ipaddr
       stub_doh("www.pgyer.com", { "Status" => 3 })
       stub_doh("www.xcxwo.com", { "Status" => 0, "Answer" => [{ "type" => 1, "data" => "203.0.113.8" }] })
       stub_pgyer(server: servers[1])
@@ -222,7 +228,17 @@ describe Fastlane::Helper::PgyerClient do
       expect(output.join("\n")).to include("found no address for www.pgyer.com")
     end
 
+    it "uses the system DNS when Net::HTTP can't connect to a given address" do
+      allow(Net::HTTP).to receive(:method_defined?).and_call_original
+      allow(Net::HTTP).to receive(:method_defined?).with(:ipaddr=).and_return(false)
+      stub_pgyer
+      upload
+      expect(a_request(:get, "https://dns.alidns.com/resolve").with(query: hash_including({}))).not_to have_been_made
+      expect(output.join("\n")).to include("The doh option needs Ruby 2.7 or later")
+    end
+
     it "sets the address on Net::HTTP without touching TLS verification" do
+      needs_ipaddr
       http = Net::HTTP.new("www.pgyer.com", 443)
       described_class.connect_to(http, "203.0.113.7")
       expect(http.ipaddr).to eq("203.0.113.7")
