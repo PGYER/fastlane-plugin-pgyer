@@ -66,7 +66,6 @@ end
 ```
 
 Set a version update description for App:
-acd88a1a52f0818dc7923150c4d86f08
 ```
 lane :beta do
   gym
