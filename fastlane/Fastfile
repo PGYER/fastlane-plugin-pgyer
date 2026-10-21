@@ -1,40 +1,14 @@
-lane :test do
-  pgyer
-end
+# Example lanes. Set PGYER_API_KEY before running them, for example:
+#   PGYER_API_KEY=your_api_key bundle exec fastlane upload_apk apk:app-release.apk
 
-# 上传 APK 文件
 lane :upload_apk do |options|
-  pgyer(
-    api_key: options[:api_key] || ENV["PGYER_API_KEY"] || "你的API密钥",
-    apk: options[:apk] || "1.apk",
-    doh: options[:doh] || false
-  )
+  pgyer(apk: options[:apk], update_description: options[:update_description])
 end
 
-# 上传 IPA 文件
-lane :upload_ipa do
-  pgyer(
-    api_key: "你的API密钥",
-    ipa: "1.ipa"
-  )
+lane :upload_ipa do |options|
+  pgyer(ipa: options[:ipa], update_description: options[:update_description])
 end
 
-# 通用上传方法，支持所有文件类型
-lane :upload_app do |options|
-  pgyer(
-    api_key: options[:api_key] || ENV["PGYER_API_KEY"] || "你的API密钥",
-    apk: options[:apk],
-    ipa: options[:ipa],
-    hap: options[:hap],
-    password: options[:password],
-    update_description: options[:update_description],
-    install_type: options[:install_type],
-    install_date: options[:install_date],
-    install_start_date: options[:install_start_date],
-    install_end_date: options[:install_end_date],
-    channel: options[:channel],
-    user_download_file_name: options[:user_download_file_name],
-    save_uploaded_info_json: options[:save_uploaded_info_json] || true,
-    doh: options[:doh] || false
-  )
+lane :upload_hap do |options|
+  pgyer(hap: options[:hap], update_description: options[:update_description])
 end

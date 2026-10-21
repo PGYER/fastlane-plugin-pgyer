@@ -1,205 +1,209 @@
-# kind_of? is a good way to check a type
+---
+plugins:
+- rubocop-performance
+require:
+- rubocop/require_tools
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable
+  Include:
+  - "**/*.rb"
+  - "**/*file"
+  - "**/*.gemspec"
+  - "*/lib/assets/*Template"
+  - "*/lib/assets/*TemplateAndroid"
+  Exclude:
+  - "./vendor/**/*"
+  - "**/lib/assets/DefaultFastfileTemplate"
+  - "**/lib/assets/MatchfileTemplate"
+  - "**/*.provisionprofile"
+Lint/ErbNewArguments:
+  Enabled: false
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
+Naming/BlockForwarding:
+  EnforcedStyle: explicit
+Style/SlicingWithRange:
+  Enabled: false
+Style/MultipleComparison:
+  Enabled: false
+Style/PercentLiteralDelimiters:
+  Enabled: false
 Style/ClassCheck:
   EnforcedStyle: kind_of?
-
-# .length == 0 is also good, we don't always want .zero?
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/SafeNavigation:
+  Enabled: false
+Performance/RegexpMatch:
+  Enabled: false
+Performance/StringReplacement:
+  Enabled: false
 Style/NumericPredicate:
   Enabled: false
-
-# this would cause errors with long lanes
 Metrics/BlockLength:
   Enabled: false
-  
-# this is a bit buggy
 Metrics/ModuleLength:
   Enabled: false
-
-# certificate_1 is an okay variable name
-Style/VariableNumber:
+Naming/VariableNumber:
   Enabled: false
-
-# This is used a lot across the fastlane code base for config files
-Style/MethodMissing:
+Style/MissingRespondToMissing:
   Enabled: false
-
-# 
-#   File.chmod(0777, f)
-# 
-# is easier to read than
-# 
-#   File.chmod(0o777, f)
-# 
+Style/MultilineBlockChain:
+  Enabled: false
 Style/NumericLiteralPrefix:
   Enabled: false
-
-# 
-# command = (!clean_expired.nil? || !clean_pattern.nil?) ? CLEANUP : LIST
-# 
-# is easier to read than
-# 
-# command = !clean_expired.nil? || !clean_pattern.nil? ? CLEANUP : LIST
-# 
 Style/TernaryParentheses:
   Enabled: false
-
-# sometimes it is usefull to have those empty methods
 Style/EmptyMethod:
   Enabled: false
-
-# It's better to be more explicit about the type
-Style/BracesAroundHashParameters:
-  Enabled: false
-
-# specs sometimes have useless assignments, which is fine
 Lint/UselessAssignment:
   Exclude:
-    - '**/spec/**/*'
-
-# We could potentially enable the 2 below:
-Style/IndentHash:
+  - "**/spec/**/*"
+Require/MissingRequireStatement:
+  Exclude:
+  # Action, ConfigItem, Boolean and the SharedValues of other actions come from fastlane, which loads plugins last
+  - lib/fastlane/plugin/*/actions/*.rb
+  - "**/spec/**/*.rb"
+  - "**/spec_helper.rb"
+  - spaceship/lib/spaceship/babosa_fix.rb
+  - fastlane_core/lib/fastlane_core/ui/disable_colors.rb
+  - "**/Fastfile"
+  - "**/*.gemspec"
+  - rakelib/**/*
+  - "**/*.rake"
+  - "**/Rakefile"
+  - fastlane/**/*
+  - supply/**/*
+Layout/FirstHashElementIndentation:
   Enabled: false
-
-Style/AlignHash:
+Layout/HashAlignment:
   Enabled: false
-
-# HoundCI doesn't like this rule
-Style/DotPosition:
+Layout/DotPosition:
   Enabled: false
-
-# We allow !! as it's an easy way to convert ot boolean
 Style/DoubleNegation:
   Enabled: false
-
-# Sometimes we allow a rescue block that doesn't contain code
-Lint/HandleExceptions:
+Style/SymbolArray:
   Enabled: false
-
-# Cop supports --auto-correct.
+Layout/HeredocIndentation:
+  Enabled: false
+Style/MixinGrouping:
+  Exclude:
+  - "**/spec/**/*"
+Lint/SuppressedException:
+  Enabled: false
 Lint/UnusedBlockArgument:
   Enabled: false
-
-# Needed for $verbose
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
 Style/GlobalVars:
   Enabled: false
-
-# We want to allow class Fastlane::Class
 Style/ClassAndModuleChildren:
   Enabled: false
-
-# $? Exit
 Style/SpecialGlobalVars:
   Enabled: false
-
 Metrics/AbcSize:
   Enabled: false
-
 Metrics/MethodLength:
   Enabled: false
-
 Metrics/CyclomaticComplexity:
   Enabled: false
-
-# The %w might be confusing for new users
 Style/WordArray:
   MinSize: 19
-
-# raise and fail are both okay
 Style/SignalException:
   Enabled: false
-
-# Better too much 'return' than one missing
 Style/RedundantReturn:
   Enabled: false
-
-# Having if in the same line might not always be good
 Style/IfUnlessModifier:
   Enabled: false
-
-# and and or is okay
 Style/AndOr:
-  Enabled: false
-
-# Configuration parameters: CountComments.
+  Enabled: true
+  EnforcedStyle: conditionals
 Metrics/ClassLength:
   Max: 320
-
-
-# Configuration parameters: AllowURI, URISchemes.
-Metrics/LineLength:
+Layout/LineLength:
   Max: 370
-
-# Configuration parameters: CountKeywordArgs.
 Metrics/ParameterLists:
   Max: 17
-
-Metrics/PerceivedComplexity:
-  Max: 18
-
-# Sometimes it's easier to read without guards
 Style/GuardClause:
   Enabled: false
-
-# We allow both " and '
 Style/StringLiterals:
   Enabled: false
-
-# something = if something_else
-# that's confusing
+Style/QuotedSymbols:
+  Enabled: false
 Style/ConditionalAssignment:
   Enabled: false
-
-# Better to have too much self than missing a self
 Style/RedundantSelf:
   Enabled: false
-
-# e.g.
-# def self.is_supported?(platform)
-# we may never use `platform`
 Lint/UnusedMethodArgument:
   Enabled: false
-
-# the let(:key) { ... }
 Lint/ParenthesesAsGroupedExpression:
   Exclude:
-    - '**/spec/**/*'
-
-# This would reject is_ in front of methods
-# We use `is_supported?` everywhere already
-Style/PredicateName:
+  - "**/spec/**/*"
+Naming/PredicatePrefix:
   Enabled: false
-
-# We allow the $
 Style/PerlBackrefs:
   Enabled: false
-
-# Disable '+ should be surrounded with a single space' for xcodebuild_spec.rb
-Style/SpaceAroundOperators:
+Layout/SpaceAroundOperators:
   Exclude:
-    - '**/spec/actions_specs/xcodebuild_spec.rb'
-
-AllCops:
-  Include:
-    - '**/fastlane/Fastfile'
+  - "**/spec/actions_specs/xcodebuild_spec.rb"
+Naming/FileName:
   Exclude:
-    - '**/lib/assets/custom_action_template.rb'
-    - './vendor/**/*'
-
-# We're not there yet
+  - "**/Gemfile"
+  - "**/Podfile"
+  - "**/Rakefile"
+  - "**/Fastfile"
+  - "**/Deliverfile"
+  - "**/Snapfile"
+  - "**/Pluginfile"
+  - "**/*.gemspec"
 Style/Documentation:
   Enabled: false
-
-# Added after upgrade to 0.38.0
 Style/MutableConstant:
   Enabled: false
-
-# length > 0 is good
 Style/ZeroLengthPredicate:
   Enabled: false
-
-# Adds complexity
 Style/IfInsideElse:
   Enabled: false
-
-# Sometimes we just want to 'collect'
 Style/CollectionMethods:
+  Enabled: false
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  AllowedMethods:
+  - require
+  - require_relative
+  - fastlane_require
+  - gem
+  - program
+  - command
+  - raise
+  - attr_accessor
+  - attr_reader
+  - desc
+  - lane
+  - private_lane
+  - platform
+  - to
+  - not_to
+  - describe
+  - it
+  - be
+  - context
+  - before
+  - after
+Bundler/OrderedGems:
+  Enabled: true
+  TreatCommentsAsGroupSeparators: false
+Gemspec/DevelopmentDependencies:
+  Enabled: true
+  EnforcedStyle: gemspec
+Metrics/PerceivedComplexity:
+  Max: 18
+# Multi-line literals end with a comma, as in the rest of this plugin
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+# Publishing with MFA is set up on the RubyGems account, not in the gemspec
+Gemspec/RequireMFA:
   Enabled: false

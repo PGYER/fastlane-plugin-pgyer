@@ -15,3 +15,7 @@ pgyer-fastlane-uploaded-app-info.json
 2.apk
 3.hap
 1__1_.apk
+
+# Gems installed into the repository, e.g. with BUNDLE_PATH=vendor/bundle
+/vendor/
+/.bundle/
