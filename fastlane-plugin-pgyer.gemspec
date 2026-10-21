@@ -1,5 +1,4 @@
-# coding: utf-8
-lib = File.expand_path("../lib", __FILE__)
+lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "fastlane/plugin/pgyer/version"
 
@@ -10,11 +9,10 @@ Gem::Specification.new do |spec|
   spec.email = "rexshi@pgyer.com"
 
   spec.summary = "distribute app to pgyer beta testing service"
-  spec.homepage = "https://github.com/shishirui/fastlane-plugin-pgyer"
+  spec.homepage = "https://github.com/PGYER/fastlane-plugin-pgyer"
   spec.license = "MIT"
 
   spec.files = Dir["lib/**/*"] + %w(README.md LICENSE)
-  spec.test_files = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
   spec.required_ruby_version = ">= 2.6"
@@ -32,8 +30,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("rake")
   spec.add_development_dependency("rspec")
   spec.add_development_dependency("rspec_junit_formatter")
-  spec.add_development_dependency("rubocop", "1.12.1")
-  spec.add_development_dependency("rubocop-performance")
+  spec.add_development_dependency("rubocop", "1.91.0")
+  spec.add_development_dependency("rubocop-performance", ">= 1.24") # loaded as a RuboCop plugin
   spec.add_development_dependency("rubocop-require_tools")
   spec.add_development_dependency("simplecov")
+  spec.add_development_dependency("webmock")
 end
